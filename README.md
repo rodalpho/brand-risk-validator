@@ -89,11 +89,53 @@ curl -X POST https://your-deployment.vercel.app/api/validate \
 
 ### GET `/api/discovery`
 
-Returns the Opal Tool Registry discovery schema for tool integration.
+Returns the Opal Tool Registry discovery schema for tool integration. This endpoint enables automatic tool discovery and integration with platforms that support the Opal Tool Registry format.
 
+**Request:**
 ```bash
 curl https://your-deployment.vercel.app/api/discovery
 ```
+
+**Response:**
+```json
+{
+  "functions": [
+    {
+      "name": "validateContent",
+      "description": "Validates content against prohibited categories (gambling, cryptocurrency, adult content, medical claims, financial advice) to ensure platform compliance and brand safety before publication",
+      "parameters": [
+        {
+          "name": "content",
+          "type": "string",
+          "description": "Text content to validate for brand risk",
+          "required": true
+        }
+      ],
+      "endpoint": "/api/validate",
+      "httpmethod": "POST"
+    }
+  ]
+}
+```
+
+**Schema Fields:**
+
+- `functions` - Array of available validation functions
+  - `name` - Function identifier (`validateContent`)
+  - `description` - Human-readable description of the validation capabilities
+  - `parameters` - Array of function parameters
+    - `name` - Parameter name
+    - `type` - Data type (string)
+    - `description` - Parameter description
+    - `required` - Whether parameter is required (true)
+  - `endpoint` - API endpoint path to call (`/api/validate`)
+  - `httpmethod` - HTTP method to use (POST)
+
+**Integration:**
+
+This endpoint allows tools and platforms to automatically discover and integrate the brand risk validation service without manual configuration. The discovery schema follows the Opal Tool Registry format for standardized tool discovery.
+
+See `api/discovery.py:4-21` for the discovery schema definition.
 
 ### GET `/api/health`
 
