@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/validate.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "api/discovery.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/validate",
+      "dest": "api/validate.py"
+    },
+    {
+      "src": "/api/discovery",
+      "dest": "api/discovery.py"
+    },
+    {
+      "src": "/api/health",
+      "dest": "api/validate.py"
+    }
+  ]
+}

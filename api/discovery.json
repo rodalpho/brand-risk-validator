@@ -1,0 +1,64 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Brand Risk Validator Tools",
+    "version": "1.0.0",
+    "description": "Custom tools for brand safety and content validation"
+  },
+  "servers": [
+    {
+      "url": "https://brand-risk-validator-9e4bvrtxe-rodalpho-carmichaels-projects.vercel.app"
+    }
+  ],
+  "paths": {
+    "/api/validate": {
+      "post": {
+        "summary": "Validate content for brand risk",
+        "operationId": "validateContent",
+        "description": "Checks content for prohibited categories including gambling, cryptocurrency, adult content, medical claims, and financial advice",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "type": "string",
+                    "description": "Text content to validate for brand safety"
+                  }
+                },
+                "required": ["content"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Validation result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "is_safe": {"type": "boolean"},
+                    "risk_score": {"type": "integer"},
+                    "violations": {
+                      "type": "array",
+                      "items": {"type": "string"}
+                    },
+                    "flagged_terms": {
+                      "type": "array",
+                      "items": {"type": "string"}
+                    },
+                    "message": {"type": "string"}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
